@@ -9,16 +9,18 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
-class UserRegistController extends Controller
+class RegistUserController extends Controller
 {
     public function store(RegistUserRequest $request)
     {
+        // データベースにユーザーを作成
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
         if ($user) {
+            // Bearerトークンを作成
             return response()->json([
                 'access_token' => User::auth($request),
                 'token_type' => 'Bearer',

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TweetController;
-use App\Http\Controllers\Api\UserRegistController;
+use App\Http\Controllers\Api\RegistUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +30,4 @@ Route::middleware("auth:sanctum")
 
 Route::post("auth",[AuthController::class,"auth"]);
 
-Route::post('/regist/store', [UserRegistController::class, 'store']);
+Route::post('/regist/store', [RegistUserController::class, 'store']);

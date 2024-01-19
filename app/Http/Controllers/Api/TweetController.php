@@ -13,18 +13,27 @@ class TweetController extends Controller
             ->orderBy("created_at","desc")
             ->limit(25)
             ->get();
+
         return response()->json($tweets);
     }
 
     function add(TweetRequest $request) {
 
+        // 認証されているユーザーを取得
         $user = $request->user();
-        if($user && $request->user_id == $user->id){
+
+        // IDが一致していたら
+        if($request->user_id == $user->id){
+            // データベースに保存
             $tweet = Tweet::create($request->all());
             $tweet->user = $user;
             return response()->json($tweet);
         } else {
-            return response()->json(["error" => "invalid tweet"], 401);
+            // そうじゃないならエラーを吐く 
+            return response()->json(
+                ["error" => "invalid tweet"], 
+                401
+            );
         }
     }
 }
